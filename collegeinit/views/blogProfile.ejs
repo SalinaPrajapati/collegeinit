@@ -1,0 +1,113 @@
+<% include templates/header.html%>
+<link rel="stylesheet" type="text/css" href="/css/blog.css">
+<div class="container-fluid blog-container" ng-controller="blogProfileController" ng-init="loadBlog('<%= profileData._id%>')">
+    <div class="header-of-blog col-md-12">
+        <div class="contain" style="background-image:url('/images/back.png'); height: 45vh;
+           background-size: cover; background-position: center;">
+            <p class="middle">{{blogData.blog_title}} <br>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-10 col-md-offset-1 blog-body">
+        <!-- <div class="col-md-12 blog-wrapper"> -->
+            <!-- <div class="inner-wrapper col-md-12"> -->
+                <div class="col-md-9 blog-details">
+                    <img src="/uploads/{{blogData.image}}" width="100%" alt="">
+                    <h2 style="text-align:center;">{{blogData.blog_title}} 
+                    </h2>
+                    <div class="col-md-12" ng-bind-html="blogData.blog_body" style="margin-top:20px; border-top:1px solid #dadada; padding:0px;"></div>
+                   <div class="col-md-12 blog-comment">
+                      <div class="comment-headers col-md-12">
+                            <div class="comment-header col-md-6">
+                                    <h4>Conversation ({{comments.length}})</h4>
+                               </div>
+                               <div class="comment-header col-md-6">
+                               </div>
+                      </div>
+                       <div class="col-md-12 comment-form"  style="padding: 0px;">
+                           <div class="col-md-1" style="padding: 0px;">
+                                <img src="/images/user1.png" width="100%" alt="" style="    border-radius: 93px;
+                                border: 3px solid #e2e2e2;
+                                margin-top: 1px;
+                                padding: 5px;
+                                background: white;">
+                           </div>
+                           <div class="col-md-11">
+                                <div class="col-md-6">
+                                        <input type="text" ng-model="comment.name" class="form-control" placeholder="Your Name Here..">
+                                   </div>
+                                   <div class="col-md-6">
+                                        <input type="email" class="form-control" placeholder="Your Email Here.." ng-model="comment.email">
+                                   </div> 
+                                   <div class="col-md-12">
+                                        <br> <textarea type="text" class="form-control" rows="5" placeholder="Your Comment Here.." ng-model="comment.comment_body"></textarea>
+                                      <br> <button class="btn btn-primary btn-sm" ng-click="postComment('<%= profileData._id%>')">POST</button>
+                                      <p ng-if="message">{{message}}</p>
+                                    </div>
+                           </div>
+                       </div> 
+                       <div class="col-md-12 comment-display" style="padding: 0px;">
+                           <div class="col-md-12 comment-items" ng-repeat="data in comments | orderBy: '-created'">
+                                <div class="col-md-1" style="padding-right:0px;">
+                                        <img src="/images/user1.png" width="100%" alt="" style="     border-radius: 93px;
+                                        border: 3px solid #e2e2e2;
+                                        margin-top: 26px;
+                                        padding: 5px;
+                                        background: white;">
+                                </div>
+                                <div class="col-md-11 comment-body">
+                                    <h3>{{data.user.name}} <span>{{data.created | date: 'medium'}}</span></h3>
+                                    <p>{{data.comment_body}}</p>
+                                </div>
+                           </div>
+                      </div>
+                   </div>
+                </div>
+                <div class="col-md-3 blog-more">
+                    <div class="col-md-12 blog-right-inner">
+                    <button class="btn btn-primary" style="width: 100%; padding:10px;"><span class="fa fa-facebook-official"></span> Share on facebook</button>
+                         <!-- {{blogData.author}} --> <hr>
+                         <div class="col-md-12">
+                             <label for="">Author Details,</label>
+                             <h3>{{blogData.author.name}}</h3>
+                             <p>{{blogData.author.username}}</p>
+                         </div>
+                    </div>
+                </div>
+                <div class="col-md-12 blog-left" ng-controller="blogController" ng-init="loadBlog()">
+                    <h2 style="    font-size: 22px;
+                    margin-left: 2.5%;
+                    color: #e47414;
+                    font-weight: bold;
+                    margin-bottom: 16px;">Related Blogs</h2>
+                         <div ng-repeat="data in blogDatas | limitTo: 6">
+                            <a  href="/{{data.slug}}/blog={{data._id}}">
+                                <div class="col-sm-6 col-lg-6 abroad">
+                                    <img src="/uploads/{{data.image}}" alt="{{data.blog_title}}" class="aus">
+                                    <h5>{{data.blog_title}}</h5>
+                                    <p ng-bind-html="data.blog_body.substring(0, 150)">
+                                         
+                                    </p>
+                                     <div class="col-md-12 blog-buttons">
+                                         <span class="fa fa-eye"> <span>{{data.views}}</span></span>
+                                         <span class="fa fa-comment"> <span>{{data.commentCount}}</span></span>
+                                         <span class="fa fa-user"> <span>{{data.author_name}}</span></span>
+                                     </div>
+                                </div>
+                            </a>
+                         </div>
+                </div>
+            <!-- </div> -->
+        <!-- </div> -->
+    </div>
+</div>
+<style>
+.abroad{
+    width: 30%;
+    height: 380px;
+}
+.blog-left{
+    margin-top: 2%;
+}
+</style>
+<% include templates/footer.html%>

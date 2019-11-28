@@ -1,0 +1,79 @@
+<% include templates/header.html%>
+
+<!-- render home page -->
+<%if(pid=='home'){%>
+    <style>
+      #home-pg{
+        color: orange;
+      }
+    </style>
+<% include templates/home.html%>
+<%}%>
+<%if(pid=='search'){%>
+  <!-- <style>
+    /* #home-pg{
+      color: orange;
+    } */
+  </style> -->
+<% include templates/search.html%>
+<%}%>
+<!-- end -->
+<!-- colleges paga -->
+<%if(pid=='colleges'){%>
+    <style>
+      #college-pg{
+        color: orange;
+      }
+    </style>
+<% include templates/colleges.html%>
+<%}%>
+<!-- end -->
+<!-- render signup page -->
+<%if(pid=='signup'){%>
+    <style>
+        .sign{
+          color: orange;
+        }
+    </style>
+<% include templates/signup.html%>
+<%}%>
+<!-- end -->
+<!-- render login page -->
+<%if(pid=='login'){%>
+    <style>
+        .log{
+          color: orange;
+        }
+     </style>
+<% include templates/login.html%>
+<%}%>
+<!-- end -->
+<!-- render blog page -->
+<%if(pid=='blogs'){%>
+  <style>
+      #blog-pg{
+        color: orange;
+      }
+   </style>
+<% include templates/blog.html%>
+<%}%>
+<%if(pid=='notes'){%>
+  <style>
+      #notes-pg{
+        color: orange;
+      }
+   </style>
+<% include templates/notes.html%>
+<%}%>
+<!-- end -->
+
+<% include templates/footer.html%>
+
+</body>
+
+</html>
+<style>
+    [ng-cloak] {
+       display: none !important;
+     }
+ </style>

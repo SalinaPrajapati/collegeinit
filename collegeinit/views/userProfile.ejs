@@ -1,0 +1,235 @@
+<% include templates/header.html%>
+<div ng-controller="profileController">
+   <div class="container-fluid main-profile-body" style="padding:0px; background: whitesmoke;">
+       <div class="header-of-profile col-md-12" style="padding:0px">
+            <div class="profile-header col-sm-12">
+                    <div class="header-background">
+                        <button id="updateInfo" class="btn  btn-sm" data-toggle="modal" data-target="#addInfo"><span class="fa fa-pencil"></span> Update Info</button>
+                        <div class="name-of-college">
+                            <h2><%= userData.name%></h2>
+                        </div>
+                    </div>
+                    <div class="profile-pic">
+                        <img src="/images/camera.png" ng-if="!user.logo" alt="profile-image" class="img-responsive">
+                        <img src="/uploads/{{user.logo}}" ng-if="user.logo" alt="profile-image" class="img-responsive">
+                        <input type="file" id="logo" style="display: none" ng-model="user.logo">
+                        <p class="upload-logo" data-toggle="modal" data-target="#addLogo" onclick="$('#logo').click()"><span class="fa fa-camera"></span>Update Logo</p>
+                    </div>
+                    <div class="col-md-12" style=" padding: 0px 36px;">
+                            <div class="col-md-4"></div>
+                            <div class="total-members col-md-8">
+                                <div class="col-md-9 student-num">
+                                        <a href="#" id="news-menu" style="border-right:0px;"><span class="fa fa-caret-up"></span> My Blogs and Notes</a>
+                                </div>
+                            </div>
+                    </div>
+             </div>
+       </div>
+       <div class="col-md-10 col-md-offset-1 details-of-profile">
+           <div class="col-md-3 profile-left">
+               <div class="profile-left-bar" style="width:263px;">
+                <div class="col-md-12 profile-inner-items display-on-scroll" style="display:none; padding: 10px;">
+                        <div class="">
+                            <img src="/images/camera.png" ng-if="!user.logo" alt="profile-image" class="img-responsive" style=" height: 138px;
+                            width: 100%;">
+                              <img src="/uploads/{{user.logo}}" ng-if="user.logo" alt="profile-image" class="img-responsive" style=" height: 138px;
+                              width: 100%;">
+                        </div>
+                </div>
+                <div class="col-md-12 profile-inner-items">
+                    <h2><%= userData.name%></h2>
+                    <p><span class="fa fa-user-secret"></span> <%= userData.username%></p>
+                   </div>
+                   <div class="col-md-12 profile-inner-items">
+                    <p><span class="fa fa-facebook-official"></span> 
+                        <a href="<%= userData.facebook_link%>" target="_blank">Facebook Page</a>
+                    </p>
+                    <p><span class="fa fa-globe"></span>
+                        <a href="<%= userData.website%>" target="_blank">Website</a>
+                    </p>
+                    <p><span class="fa fa-calendar"></span> <%= userData.created%></p>
+                   </div>
+               </div>
+           </div>
+           <div class="col-md-9" style="padding:0px;">
+            <h4>My all blogs</h4>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <h4>My all Notes</h4>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+                <li><a href="">Title of the blog</a> <span>2012/12/12</span></li>
+       </div>
+       </div>
+   </div>
+     <!-- modal popup of info -->
+     <div id="addInfo" class="modal fade adminProfileInfo" role="dialog" style="display: none;">
+            <div class="modal-dialog" style="min-width: 93%;">
+              <!-- Modal content-->
+              <div class="modal-content" >
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h4 class="modal-title">Edit Your Information</h4>
+                </div>
+                <div class="col-md-12 col-lg-12 modal-body add-profile-info">
+                   <div class="col-md-4 col-lg-3 editInput">
+                            <div class="form-group">
+                                <label>name:</label><br>
+                                <input type="text" class="form-control" placeholder="Name" ng-model="user.name">
+                            </div>
+                            <div class="form-group">
+                                <label>username:</label>
+                                <input type="text" class="form-control" placeholder="Username" ng-model="user.username">
+                            </div>
+                            <div class="form-group">
+                                <label>password:</label>
+                                <input type="password" class="form-control" placeholder="Password" ng-model="user.password">
+                            </div>
+                            <div class="form-group">
+                                <label>contact:</label>
+                                <input type="text" class="form-control" placeholder="Contact" ng-model="user.contact">
+                            </div>
+                            <div class="form-group">
+                                <label>Established:</label>
+                                <input type="date" class="form-control" placeholder="Established" ng-model="user.established">
+                            </div>
+                            <div class="form-group">
+                                <label>board:</label>
+                                <select class="form-control"  ng-model="user.board">
+                                    <option value="Purbanchal University"> Purbanchal University</option>
+                                    <option value="Tribhuvan University"> Tribhuvan University</option>
+                                    <option value="Kathmandu University"> Kathmandu University</option>
+                                    <option value="Pokhara University"> Pokhara University</option>
+                                    <option value="HSEB"> HSEB</option>
+                                    <option value="CTEVT"> CTEVT</option>
+                                    <option value="International Board"> International Board</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>optional contact:</label>
+                                <input type="text" class="form-control" placeholder="Phone" ng-model="user.optional_contact">
+                            </div>
+                   </div>
+                   <div class="col-md-4 col-lg-3 editInput-info">
+                        <div class="form-group">
+                            <label>email:</label>
+                            <input type="email" class="form-control" placeholder="Email" ng-model="user.email">
+                        </div>
+                        <div class="form-group">
+                            <label>website:</label>
+                            <input type="text" class="form-control" placeholder="Official Website" ng-model="user.website">
+                        </div>
+                        <div class="form-group">
+                            <label>facebook link:</label>
+                            <input type="text" class="form-control" placeholder="Facebook Link" ng-model="user.facebook_link">
+                        </div>
+                        <div class="form-group">
+                            <label>address:</label>
+                            <input type="text" class="form-control" placeholder="Address" ng-model="user.address">
+                        </div>
+                        <div class="form-group">
+                            <label>background picture:</label>
+                            <input type="file" class="form-control" id="backPic" placeholder="Address" ng-model="user.background">
+                            <img id="backPicview" width="100%" alt=""style="margin-top: 7px;height: 66px;">
+                       </div>
+                  </div>
+                  <div class="col-md-4 col-lg-6 editInput-info">
+                     <!-- latitude and lonitude  --> 
+                     <div class="col-sm-12 col-md-12 news-content">
+                        <h5>Pick location to update map of your college</h5>
+                        <div class="col-sm-12 col-md-12">
+                          <div id='map1' style='width: 100%; height: 300px;'></div><br>
+                          <div style="width:50%;">
+                            <label for="">Longitude
+                              <pre id='lng'></pre></label>
+                            <label for="">Latitude
+                              <pre id='lat'></pre></label><br>
+                        </div>
+                          <!-- error message -->
+                          <div class="alert alert-danger" ng-if="errorMessage">
+                              <strong>{{errorMessage}}</strong>
+                          </div>
+                          <!-- end -->
+                        </div>
+                      </div>
+                     <!-- end -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <img src="/images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                    <!-- ng-if="signup_btn == true" -->
+                    <button class="btn btn-primary btn-sm" ng-if="signup_btn == true" ng-click="updateProfileInfo('<%= profileData._id%>')"><span class="fa fa-check"></span> Update Info</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+          
+            </div>
+     </div>
+       <!-- end modal -->
+       <!-- update logo -->
+       <div id="addLogo" class="modal fade adminProfileInfo" role="dialog" style="display: none;">
+            <div class="modal-dialog" style="max-width: 27%;">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h4 class="modal-title">Update Colleges Logo</h4>
+                </div>
+                <div class="col-md-12 col-lg-12 modal-body add-profile-info">
+                    <img id="blah" width=" 100%;" style="min-height: 50px;">
+                </div>
+                <div class="modal-footer">
+                     <!-- error message -->
+                       <div class="alert alert-danger" ng-if="errorMessage">
+                            <strong>{{errorMessage}}</strong>
+                        </div>
+                        <!-- end -->
+                    <img src="./images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                    <!-- ng-if="signup_btn == true" -->
+                    <button class="btn btn-primary btn-sm" ng-if="signup_btn == true" ng-click="updateLogo('<%= profileData._id%>')"><span class="fa fa-check"></span> Update Logo</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+          
+            </div>
+        </div>
+       <!-- end -->
+
+</div>
+      
+<% include templates/footer.html%>
+
+<script>
+    $(window).scroll(function(e){ 
+   var $el = $('.profile-left-bar'); 
+   var isPositionFixed = ($el.css('position') == 'fixed');
+   if ($(this).scrollTop() > 420 && !isPositionFixed){ 
+     $('.profile-left-bar').css({'position': 'fixed', 'top': '7%'}); 
+     $('.display-on-scroll').css({'display': 'block',});
+
+   }
+   if ($(this).scrollTop() < 420 && isPositionFixed)
+   {
+     $('.profile-left-bar').css({'position': 'static',});
+     $('.display-on-scroll').css({'display': 'none',});
+   } 
+ });
+ </script>
+

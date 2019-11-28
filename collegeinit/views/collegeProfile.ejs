@@ -1,0 +1,328 @@
+<% include templates/header.html%>
+<div ng-controller="profileController" ng-init="loadProfile('<%= profileData._id%>')">
+   <div class="container-fluid main-profile-body " style="padding:0px; background: whitesmoke;">
+       <div class="header-of-profile col-md-12" style="padding:0px">
+            <div class="profile-header col-sm-12">
+                    <div class="header-background">
+                        <%if(loginStatus==true){%>
+                            <%if(userData._id == profileData._id){%>
+                                <button id="updateInfo" class="btn  btn-sm" data-toggle="modal" data-target="#addInfo"><span class="fa fa-pencil"></span> Update Info</button>
+                            <%}%>
+                        <%}%>
+                      
+                        <img src="/uploads/{{user.background_image}}" alt="background" class="img-responsive">
+                        <div class="name-of-college">
+                            <h2>{{user.name}}</h2>
+                            <p></span> {{user.board}}</p>
+                        </div>
+                    </div>
+                    <div class="profile-pic">
+                        <img src="/images/camera.png" ng-if="!user.logo" alt="profile-image" class="img-responsive">
+                              <img src="/uploads/{{user.logo}}" ng-if="user.logo" alt="profile-image" class="img-responsive">
+                        <%if(loginStatus==true){%>
+                            <% if(userData._id == profileData._id){%>
+                             <input type="file" id="logo" style="display: none" ng-model="user.logo">
+                            <p class="upload-logo" data-toggle="modal" data-target="#addLogo" onclick="$('#logo').click()"><span class="fa fa-camera"></span>Update Logo</p>
+                        <%}%>
+                        <%}%>
+                    </div>
+                    <div class="col-md-12" style=" padding: 0px 36px;">
+                            <div class="col-md-4"></div>
+                            <div class="total-members col-md-8">
+                                <div class="col-md-9 student-num">
+                                        <a href="#" id="news-menu" ng-click="news()" style="border-left: 1px solid #ca5d00;"><span class="fa fa-caret-up" ng-if="newsPage==true"></span> News</a>
+                                        <a href="#" id="about-menu" ng-click="about()"><span class="fa fa-caret-up" ng-if="aboutPage==true"></span> About</a>
+                                <!-- </div>
+                                <div class="col-md-2 student-num"> -->
+                                        <a href="#" id="courses-menu" ng-click="courses()"><span class="fa fa-caret-up" ng-if="coursesPage==true"></span> Courses</a>
+                                 <!-- </div>
+                                 <div class="col-md-2 student-num"> -->
+                                     <a href="#" id="admission-menu" ng-click="admission()"><span class="fa fa-caret-up" ng-if="admissionPage==true"></span> Admission</a>
+                                 <!-- </div>
+                                 <div class="col-md-2 student-num"> -->
+                                        <a href="#" id="scholarship-menu" ng-click="scholarship()"><span class="fa fa-caret-up" ng-if="scholarshipPage==true"></span> Scholarship</a>
+                                        <a href="#" id="gallery-menu">Gallery</a>
+                                </div>
+                                <div class="col-md-3 announcement-btn">
+                                        <%if(loginStatus==true){%>
+                                            <%if(userData._id == profileData._id){%>
+                                                <button class="btn btn-default" data-toggle="modal" data-target="#addNotice" style="margin-left: 33px; width: 91%;">
+                                                        <span class="fa fa-plus"></span> New Notice</button>
+                                            <%}else{%>
+                                                <button class="btn btn-default" data-toggle="modal" data-target="#addNotice" style="margin-left: 33px; width: 91%;">
+                                                        <span class=""></span> Take Enquiry</button>
+                                            <%}%>
+                                           
+                                        <%}else{%>
+                                            <button class="btn btn-default" data-toggle="modal" data-target="#addNotice" style="margin-left: 33px; width: 91%;">
+                                                    <span class=""></span> Take Enquiry</button>
+                                        <%}%>
+                                </div>
+                            </div>
+                    </div>
+             </div>
+       </div>
+       <div class="col-md-10 col-md-offset-1 details-of-profile">
+           <div class="col-md-3 profile-left">
+               <div class="profile-left-bar" style="width:263px;">
+                <div class="col-md-12 profile-inner-items display-on-scroll" style="display:none; padding: 10px;">
+                        <div class="">
+                            <img src="/images/camera.png" ng-if="!user.logo" alt="profile-image" class="img-responsive" style=" height: 138px;
+                            width: 100%;">
+                              <img src="/uploads/{{user.logo}}" ng-if="user.logo" alt="profile-image" class="img-responsive" style=" height: 138px;
+                              width: 100%;">
+                        </div>
+                </div>
+                <div class="col-md-12 profile-inner-items">
+                    <h2>{{user.name}}</h2>
+                    <p><span class="fa fa-envelope"></span> {{user.email}}</p>
+                    <p><span class="fa fa-user-secret"></span> {{user.username}}</p>
+                    <p><span class="fa fa-phone"></span> {{user.contact}}, {{user.optional_contact}}</p>
+                    <p><span class="fa fa-globe"></span> {{user.address}}</p>
+                   </div>
+                   <div class="col-md-12 profile-inner-items">
+                    <p><span class="fa fa-facebook-official"></span> 
+                        <a href="{{user.facebook_link}}" target="_blank" ng-if="user.facebook_link">Facebook Page</a>
+                        <span ng-if="!user.facebook_link"> not updated</span>
+                    </p>
+                    <p><span class="fa fa-globe"></span>
+                        <a href="{{user.website}}" target="_blank" ng-if="user.website">Website</a>
+                        <span ng-if="!user.website"> not updated</span>
+                    </p>
+                    <p><span class="fa fa-calendar"></span> {{user.created | date:''}}</p>
+                   </div>
+                   <div class="col-md-12 profile-inner-items" style="padding:3px;">
+                    <button class="btn btn-primary btn-sm" style="width:100%;">Give Feedback To College</button>
+                   </div>
+               </div>
+
+           </div>
+           <div class="col-md-9" style="padding:0px;">
+            <div class="alert alert-default alert-dismissible fade in" style="margin-top: 9px; margin-bottom: 0px; border:1px solid #e4e4e4;">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  
+                <strong>Notice!</strong> This alert box could indicate new notice of admission.
+            </div>
+            <!-- news page -->
+            <div class="col-md-12 profile-right" ng-if="newsPage==true" ng-init="loadNotice('<%= profileData._id%>')">
+                    <% include profile/news.html%>
+            </div>
+            <!-- end -->
+            <!-- if about is active -->
+            <div class="col-md-12 profile-right" ng-if="aboutPage==true">
+                <% include profile/about.html%>
+            </div>
+            <!-- <end of about -->
+                <!-- if courses is active -->
+            <div class="col-md-12 profile-right" ng-if="coursesPage==true">
+                   <% include profile/courses.html%>
+            </div>
+                <!-- end -->
+
+                <!-- adminssion active -->
+             <div class="col-md-12 profile-right" ng-if="admissionPage==true">
+                   <% include profile/addmission.html%>
+             </div>
+                <!-- end -->
+                <!-- scholarship page -->
+            <div class="col-md-12 profile-right" ng-if="scholarshipPage==true">
+                   <% include profile/scholarship.html%>
+            </div>
+                <!-- end -->
+                <!-- map -->
+            <div class="col-md-12 profile-right" style="margin-top:-5px;">
+                    <% include profile/map.html%>
+             </div>
+                <!-- end -->
+                
+       </div>
+       </div>
+   </div>
+     <!-- modal popup of info -->
+     <div id="addInfo" class="modal fade adminProfileInfo" role="dialog" style="display: none;">
+            <div class="modal-dialog" style="min-width: 93%;">
+              <!-- Modal content-->
+              <div class="modal-content" >
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h4 class="modal-title">Edit Your Information</h4>
+                </div>
+                <div class="col-md-12 col-lg-12 modal-body add-profile-info">
+                   <div class="col-md-4 col-lg-3 editInput">
+                            <div class="form-group">
+                                <label>name:</label><br>
+                                <input type="text" class="form-control" placeholder="Name" ng-model="user.name">
+                            </div>
+                            <div class="form-group">
+                                <label>username:</label>
+                                <input type="text" class="form-control" placeholder="Username" ng-model="user.username">
+                            </div>
+                            <div class="form-group">
+                                <label>password:</label>
+                                <input type="password" class="form-control" placeholder="Password" ng-model="user.password">
+                            </div>
+                            <div class="form-group">
+                                <label>contact:</label>
+                                <input type="text" class="form-control" placeholder="Contact" ng-model="user.contact">
+                            </div>
+                            <div class="form-group">
+                                <label>Established:</label>
+                                <input type="date" class="form-control" placeholder="Established" ng-model="user.established">
+                            </div>
+                            <div class="form-group">
+                                <label>board:</label>
+                                <select class="form-control"  ng-model="user.board">
+                                    <option value="Purbanchal University"> Purbanchal University</option>
+                                    <option value="Tribhuvan University"> Tribhuvan University</option>
+                                    <option value="Kathmandu University"> Kathmandu University</option>
+                                    <option value="Pokhara University"> Pokhara University</option>
+                                    <option value="HSEB"> HSEB</option>
+                                    <option value="CTEVT"> CTEVT</option>
+                                    <option value="International Board"> International Board</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>optional contact:</label>
+                                <input type="text" class="form-control" placeholder="Phone" ng-model="user.optional_contact">
+                            </div>
+                   </div>
+                   <div class="col-md-4 col-lg-3 editInput-info">
+                        <div class="form-group">
+                            <label>email:</label>
+                            <input type="email" class="form-control" placeholder="Email" ng-model="user.email">
+                        </div>
+                        <div class="form-group">
+                            <label>website:</label>
+                            <input type="text" class="form-control" placeholder="Official Website" ng-model="user.website">
+                        </div>
+                        <div class="form-group">
+                            <label>facebook link:</label>
+                            <input type="text" class="form-control" placeholder="Facebook Link" ng-model="user.facebook_link">
+                        </div>
+                        <div class="form-group">
+                            <label>address:</label>
+                            <input type="text" class="form-control" placeholder="Address" ng-model="user.address">
+                        </div>
+                        <div class="form-group">
+                            <label>background picture:</label>
+                            <input type="file" class="form-control" id="backPic" placeholder="Address" ng-model="user.background">
+                            <img id="backPicview" width="100%" alt=""style="margin-top: 7px;height: 66px;">
+                       </div>
+                  </div>
+                  <div class="col-md-4 col-lg-6 editInput-info">
+                     <!-- latitude and lonitude  --> 
+                     <div class="col-sm-12 col-md-12 news-content">
+                        <h5>Pick location to update map of your college</h5>
+                        <div class="col-sm-12 col-md-12">
+                          <div id='map1' style='width: 100%; height: 300px;'></div><br>
+                          <div style="width:50%;">
+                            <label for="">Longitude
+                              <pre id='lng'></pre></label>
+                            <label for="">Latitude
+                              <pre id='lat'></pre></label><br>
+                        </div>
+                          <!-- error message -->
+                          <div class="alert alert-danger" ng-if="errorMessage">
+                              <strong>{{errorMessage}}</strong>
+                          </div>
+                          <!-- end -->
+                        </div>
+                      </div>
+                     <!-- end -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <img src="/images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                    <!-- ng-if="signup_btn == true" -->
+                    <button class="btn btn-primary btn-sm" ng-if="signup_btn == true" ng-click="updateProfileInfo('<%= profileData._id%>')"><span class="fa fa-check"></span> Update Info</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+          
+            </div>
+     </div>
+       <!-- end modal -->
+       <!-- update logo -->
+       <div id="addLogo" class="modal fade adminProfileInfo" role="dialog" style="display: none;">
+            <div class="modal-dialog" style="max-width: 27%;">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h4 class="modal-title">Update Colleges Logo</h4>
+                </div>
+                <div class="col-md-12 col-lg-12 modal-body add-profile-info">
+                    <img id="blah" width=" 100%;" style="min-height: 50px;">
+                </div>
+                <div class="modal-footer">
+                     <!-- error message -->
+                       <div class="alert alert-danger" ng-if="errorMessage">
+                            <strong>{{errorMessage}}</strong>
+                        </div>
+                        <!-- end -->
+                    <img src="./images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                    <!-- ng-if="signup_btn == true" -->
+                    <button class="btn btn-primary btn-sm" ng-if="signup_btn == true" ng-click="updateLogo('<%= profileData._id%>')"><span class="fa fa-check"></span> Update Logo</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+          
+            </div>
+        </div>
+       <!-- end -->
+         <!-- notice writing -->
+         <div id="addNotice" class="modal fade adminProfileInfo" role="dialog" style="display: none;">
+                <div class="modal-dialog" style="min-width: 70%;">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">×</button>
+                      <h4 class="modal-title">Create new notice/post</h4>
+                    </div>
+                    <div class="col-md-12 col-lg-12 modal-body add-profile-info">
+                            <div class="form-group">
+                                <label>Title of notice:</label><br>
+                            <input type="text" class="form-control" placeholder="Name" ng-model="notice.noticeTitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Notice/announcement:</label>
+                            <input type="text" ck-editor ng-model="notice.noticeBody">
+                       </div>
+                       <div class="form-group" ng-if="errorMessage">
+                           <div class="alert alert-danger">
+                               <strong>{{errorMessage}}</strong>
+                           </div>
+                       </div>
+                    </div>
+                    <div class="modal-footer">
+                        <img src="/images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                        <!-- ng-if="signup_btn == true" -->
+                        <button class="btn btn-primary btn-sm" ng-if="signup_btn == true" ng-click="publishNotice('<%= profileData._id%>')"><span class="fa fa-check"></span> Publish Notice</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+              
+                </div>
+               </div>
+               <!-- end -->
+</div>
+      
+<% include templates/footer.html%>
+
+<script>
+    $(window).scroll(function(e){ 
+   var $el = $('.profile-left-bar'); 
+   var isPositionFixed = ($el.css('position') == 'fixed');
+   if ($(this).scrollTop() > 420 && !isPositionFixed){ 
+     $('.profile-left-bar').css({'position': 'fixed', 'top': '7%'}); 
+     $('.display-on-scroll').css({'display': 'block',});
+
+   }
+   if ($(this).scrollTop() < 420 && isPositionFixed)
+   {
+     $('.profile-left-bar').css({'position': 'static',});
+     $('.display-on-scroll').css({'display': 'none',});
+   } 
+ });
+ </script>
+

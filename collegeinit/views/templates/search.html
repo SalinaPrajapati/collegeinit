@@ -1,0 +1,54 @@
+<div class="col-md-9 body-right">
+        <h2 style="    margin-left: 6%; padding-top: 10px; 
+        font-size: 16px;">Search Results ({{length+searchResponse.length}})</h2>
+
+        <div ng-if="searchResponse.length == 0">
+                <br>
+              <p style="margin-left: 100px;">No result found for your search</p>
+        </div>
+        <div class="col-md-12" ng-repeat="data in searchResponse" style="margin-top: 30px;
+        border-bottom: 1px solid #f1efef;
+        padding-left: 0px;
+        margin-left: 55px;
+        padding: 0px 0px 25px 1px;" ng-if="!data.name">
+           <a href="/{{data.userId.slug}}/profile={{data.userId._id}}"  class="col-md-12" >
+                <div class="col-md-4">
+                    <img src="./uploads/{{data.userId.background_image}}" width="100%" alt="" >
+                </div>
+                <div class="col-md-8">
+                        <!-- <h3>{{data.userId.name}}</h3> -->
+                         <h4 ng-if="data.userId.name.length <= 25 " style="    margin-top: 0px;
+                         font-size: 20px;
+                         font-weight: bold;">{{data.userId.name}}</h4>
+                            <h4 ng-if="data.userId.name.length > 25 " style="    margin-top: 0px;
+                                    font-size: 20px;
+                                    font-weight: bold;">{{data.userId.name.substring(0, 25)}}...</h4>
+                        <p>Course: {{data.course_name}}, <br> fee: {{data.total_fee | currency:'NRS: '}}</p>
+                 </div>
+                 </a>          
+         </div>
+
+         <!-- result of next table -->
+            <div class="col-md-12" ng-repeat="data in searchResponse" style="margin-top: 30px;
+            border-bottom: 1px solid #f1efef;
+            padding-left: 0px;
+            margin-left: 55px;
+            padding: 0px 0px 25px 1px;" ng-if="data.name">
+            <a href="/{{data.slug}}/profile={{data._id}}"  class="col-md-12" >
+                    <div class="col-md-4">
+                        <img src="./uploads/{{data.background_image}}" width="100%" alt="" >
+                    </div>
+                    <div class="col-md-8">
+                            <h4 ng-if="data.name.length <= 25 " style="    margin-top: 0px;
+                            font-size: 20px;
+                            font-weight: bold;">{{data.name}}</h4>
+                               <h4 ng-if="data.name.length > 25 " style="    margin-top: 0px;
+                                       font-size: 20px;
+                                       font-weight: bold;">{{data.name.substring(0, 25)}}...</h4>
+                            <p>{{data.address}}</p>
+                            <p>board: {{data.board}}, <br> contact: {{data.contact}}</p>
+                    </div>
+                    </a>          
+            </div>
+        <!-- {{searchResponse}} -->
+</div>

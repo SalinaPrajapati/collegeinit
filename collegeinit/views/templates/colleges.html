@@ -1,0 +1,149 @@
+<div class="container-fluid colleges-container" ng-controller="collegeController" style="padding:0px;">
+        <div class="contain" style="background-image:url('./images/back.jpg'); position: fixed; width:100%; height: 100vh;
+        background-size: cover; background-position: center;">
+         <p class="middle">Search colleges by location</p>
+         <p class="middle" style="padding:0px;">Compare colleges by fee structure</p>
+         <!-- <div class="search-bar col-md-6 col-md-offset-3">
+             <input type="text" placeholder="search by title" class="form-control">
+             <button class="btn btn-success fa fa-search"></button>
+         </div> -->
+     </div>
+    <div class="col-md-10 col-md-offset-1 colleges">
+        <div class="col-md-12 colleges-header">
+             <div class="colleges-header-links col-md-12">
+                 <div class="links">
+                        <a href="" ng-click="allCollege()"><span ng-if="all_college==true"  class="indicator fa fa-caret-up"></span><span class="fa fa-building"></span> All Colleges </a>
+                        <a href=""ng-click="feeCompare()"><span ng-if="compare_fee==true"  class="indicator fa fa-caret-up"></span> <span class="fa fa-graduation-cap"></span> Compare fee of courses</a>
+                        <a href="" ng-click="nearbyCollege()"><span ng-if="nearby_college==true" class="indicator fa fa-caret-up"></span><span class="fa fa-map-marker"></span> Nearby Colleges </a>
+                 </div>
+                 <div ng-if="compare_fee==true" style="margin: 22px 8px 7px 24px;" class="compare_nav">
+                        <!-- <div class="dropdown"> -->
+                            <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                All Courses <span class="fa fa-caret-down"></span>
+                            </button> -->
+                            <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
+                                <a class="dropdown-item" href="" ng-click="getCourses('BBA')">BBA</a>
+                                <a class="dropdown-item" href="" ng-click="getCourses('BCA')">BCA</a>
+                                <a class="dropdown-item" href="" ng-click="getCourses('BIT')">BIT</a>
+                                <a class="dropdown-item" href="" ng-click="getCourses('BE CIVIL')">BE Civil</a>
+                                <a class="dropdown-item" href="" ng-click="getCourses('BIM')">BIM</a>
+                                <a class="dropdown-item" href="" ng-click="getCourses('BSC CSIT')">BSC CSIT</a>
+                                <a class="dropdown-item" href="" ng-click="getCourses('BPHARM')">BPHARM</a>
+                                <a class="dropdown-item" href="" ng-click="getCourses('BE COMPUTER')">BE COMPUTER</a>
+                            <!-- </div> -->
+                        <!-- </div> -->
+                 </div>
+                 <div ng-if="all_college==true">
+                 <input type="text"  placeholder="search colleges" style=" width: 54%;
+                 padding: 13px 16px;
+                 margin-top: 16px;
+                 border: 1px solid #b9b9b9;
+                 border-radius: 2px;
+                 margin-left: 27px;">
+                 <button class="fa fa-search btn btn-success" style="font-size: 19px;
+                 padding: 15px 43px;
+                 margin-top: -4px;
+                 border-radius: 3px;
+                 background: #dc6d0d;
+                 border: none;"></button>
+                 </div>
+             </div>
+        </div>
+        <div class="col-md-12 college-lists-wrapper">
+            <div class="col-md-12 pu-college-header">
+                <div class="col-md-10">
+                        <h4>All Colleges {{collegesData[0].course_name }}</h4>
+                </div>
+                <div class="col-md-2 pu-feedback">
+                    <!-- <a href="" class="fa fa-filter"></a> -->
+                </div>
+            </div>
+            <div class="col-md-3 college-list" ng-if="all_college==true" ng-repeat="data in colleges">
+               <a href="/{{data.slug}}/profile={{data._id}}">
+                <img src="./uploads/{{data.background_image}}" alt=""width="100%">
+                <!-- <img src="/images/pu.png" width="20%" alt="" class="colleges-logo"> -->
+                <div class="col-md-12 college-inner-details">
+                    <h4 ng-if="data.name.length <= 20 ">{{data.name.toUpperCase()}}</h4>
+                    <h4 ng-if="data.name.length > 20 ">{{data.name.toUpperCase().substring(0, 20)}}...</h4>
+                    <h5 ng-if="data.board">{{data.board}}</h5>
+                    <h5 ng-if="!data.board">N/A</h5>
+                    <p>
+                        <!-- <a>BBA</a>
+                        <a>BCA</a>
+                        <a>BE Civil</a>
+                        <a>BIT</a>
+                        <a>BIM</a> -->
+                    </p>
+                    <p>{{data.contact}}, {{data.optional_contact}}</p>
+                </div>
+               </a>
+            </div>
+            <div class="col-md-3 college-list" ng-if="compare_fee==true" ng-repeat="data in collegesData | orderBy: 'total_fee'">
+                <a href="/{{data.userId.slug}}/profile={{data.userId._id}}">
+                        <img src="./uploads/{{data.userId.background_image}}" alt=""width="100%">
+                        <span class="rank_of_fee">{{$index+1}}</span>
+                        <!-- <img src="/images/pu.png" width="20%" alt="" class="colleges-logo"> -->
+                        <div class="col-md-12 college-inner-details">
+                            <h4 ng-if="data.userId.name.length <= 20 ">{{data.userId.name.toUpperCase()}}</h4>
+                            <h4 ng-if="data.userId.name.length > 20 ">{{data.userId.name.toUpperCase().substring(0, 20)}}...</h4>
+                            <h5 ng-if="data.userId.board">{{data.userId.board}}</h5>
+                            <h5 ng-if="!data.board">N/A</h5>
+                            <p>
+                                <!-- <a>BBA</a>
+                                <a>BCA</a>
+                                <a>BE Civil</a>
+                                <a>BIT</a>
+                                <a>BIM</a> -->
+                            </p>
+                            <p class="compare-highlight" style="color: white;">{{data.total_fee | currency: 'NRS: '}}, {{data.student_seats}} seats</p>
+                        </div>
+                       </a>
+             </div>
+                    <!-- colleges available cities    -->
+                    <div class="col-md-12 colleges-locations">
+                            <div class="col-md-12 pu-college-header" style="padding: 10px 19px;">
+                                    <div class="col-md-10">
+                                            <h4> Colleges Around following cities </h4>
+                                    </div>
+                                </div>
+                                <!-- end -->
+                            <div class="col-md-2 college-list">
+                                        <img src="/images/ku.png" alt=""width="100%">
+                                            <p>Kathmandu</p>
+                             </div>
+                                <div class="col-md-2 college-list">
+                                            <img src="/images/ku.png" alt=""width="100%">
+                                            <p>Kathmandu</p>
+
+                                 </div>
+                                <div class="col-md-2 college-list">
+                                        <img src="/images/ku.png" alt=""width="100%">
+                                            <p>Biratnagar</p>
+                                 </div>
+                                <div class="col-md-2 college-list">
+                                            <img src="/images/ku.png" alt=""width="100%">
+                                            <p>Biratnagar</p>
+                               </div>
+                               <div class="col-md-2 college-list">
+                                    <img src="/images/ku.png" alt=""width="100%">
+                                    <p>Biratnagar</p>
+
+                       </div>
+                         <div class="col-md-2 college-list">
+                                  <img src="/images/ku.png" alt=""width="100%">
+                                  <p>Biratnagar</p>
+                        </div>
+                    </div>
+                    <!-- end -->
+        </div>
+        <% include admission.html%>
+    </div>
+</div> <br>
+<style>
+ .colleges{
+     margin-top: 24%;
+ }
+ .college-list{
+    margin-top: 25px;
+ }
+</style>

@@ -1,0 +1,147 @@
+<div ng-controller="profileController" ng-init="loadCourses('<%= profileData._id%>')">
+    <style>
+        #courses-menu{
+            color: #0530d4;
+        }
+    </style>
+    <!-- courses information -->
+        <div class="col-md-12 content-header">
+            <div class="content-header-left col-md-11">
+                <h2> Courses available</h2>
+            </div>
+            <div class="content-header-right col-md-1">
+                 <%if(loginStatus==true){%>
+                <% if(userData._id == profileData._id){%>
+                    <button class="btn btn-default fa fa-pencil-square" style="float: right;" data-toggle="modal" data-target="#editCourse"> Update Course</button>
+               <%}}%>
+            </div>
+        </div>
+        <div class="col-md-12 content-body" style="border-bottom:1px solid #cccccc; padding-bottom: 0px;">
+                <!-- <div class="alert alert-default alert-dismissible fade in" style="margin-top: 9px; margin-bottom: 0px; border:1px solid #e4e4e4;">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{{courseData.courses}}</strong>
+                </div> -->
+                <div class="col-md-6 course-item" ng-repeat="dat in courseData.courses">
+                    <div class="col-md-4 course-item-left">
+                        <h2>{{dat.student_seats}}</h2>
+                        <p>seats</p>
+                    </div>
+                    <div class="col-md-8 course-item-right">
+                        <h3><span class="fa fa-book"></span> {{dat.course_name}}({{dat.short_name}})</h3>
+                        <p><span class="fa fa-vcard"></span> {{dat.course_faculty}}</p>
+                        <h5><span class="fa fa-credit-card"></span> {{dat.total_fee | currency: 'NRS: '}}</h5>
+                        <h5><span class="fa fa-clock-o"></span>{{dat.course_duration}} years</h5>
+                         
+                    </div>
+                </div>            
+        </div>
+    <!-- end -->
+    <div class="col-md-12 content-header">
+        <div class="content-header-left col-md-11">
+            <h2>Courses Detail Information</h2>
+        </div>
+        <div class="content-header-right col-md-1">
+        <%if(loginStatus==true){%>
+            <% if(userData._id == profileData._id){%>
+            <button class="btn btn-default fa fa-pencil-square" style="float: right;" data-toggle="modal" data-target="#updateCourseInfo"> Update Course Info</button>
+        <%}}%>
+        </div>
+    </div>
+    <div class="col-md-12 content-body">
+       <div ng-bind-html="courseData.courseInfo.courseBody"></div>
+    </div>
+    
+    <!-- update info -->
+    <div id="updateCourseInfo" class="modal fade adminProfileInfo" role="dialog" style="display: none;">
+        <div class="modal-dialog" style="min-width: 80%;">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">×</button>
+              <h4 class="modal-title">Update Courses Information</h4>
+            </div>
+            <div class="col-md-12 col-lg-12 modal-body add-profile-info">
+                    <div class="col-md-12 images-pick">
+                        <label for="">Write all information in text editor</label>
+                        <input ck-editor type="text" ng-model="courseInfo.courseBody">
+                    </div>
+                    <div class="form-group"  ng-if="errorMessage">
+                        <div class="alert alert-danger">
+                          <strong>{{errorMessage}}</strong>
+                      </div>
+                       </div>
+            </div>
+            <div class="modal-footer">
+                <img src="/images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                <!-- ng-if="signup_btn == true" -->
+                <button class="btn btn-primary btn-sm" ng-if="signup_btn==true" ng-click="updateCourseInfo('<%= profileData._id%>')"><span class="fa fa-check" ></span> Update Info</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>   
+       <!-- end -->
+    
+       <!-- update course -->
+    <div id="editCourse" class="modal fade adminProfileInfo" role="dialog" style="display: none;">
+        <div class="modal-dialog" style="min-width: 80%;">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">×</button>
+              <h4 class="modal-title">Update Courses </h4>
+            </div>
+            <div class="col-md-12 col-lg-12 modal-body add-profile-info">
+                    <div class="col-md-6 col-lg-6 editInput">
+                        <div class="form-group">
+                            <label>Course name:</label><br>
+                            <input type="text" class="form-control" placeholder="Course Name" ng-model="course.course_name">
+                        </div>
+                        <div class="form-group">
+                            <label>Short Name:</label>
+                            <input type="text" class="form-control" placeholder="Eg: BIT (in upper case)" ng-model="course.short_name">
+                        </div>
+                        <div class="form-group">
+                            <label>Course Duration (In Year):</label>
+                            <input type="Number" class="form-control" placeholder="Duration(eg: 4)" ng-model="course.course_duration">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 editInput-info">
+                        <div class="form-group">
+                            <label>Total Fee (In NRS):</label>
+                            <input type="number" class="form-control" placeholder="Total fee in {{course.course_duration}} yrs" ng-model="course.total_fee">
+                        </div>
+                        <div class="form-group">
+                            <label>Student Seats:</label>
+                            <input type="number" class="form-control" placeholder="Seats (eg: 40)" ng-model="course.student_seats">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Select Faculty</label>
+                            <select class="form-control" ng-model="course.course_faculty">
+                               <option value="">----Faculty----</option>
+                               <option value="science and technology">SCIENCE AND TECHNOLOGY</option>
+                               <option value="management">MANAGEMENT</option>
+                               <option value="arts">ARTS</option>
+                               <option value="education">EDUCATION</option>
+                               <option value="law">LAW</option>
+                               <option value="medical and applied sciences">MEDICAL AND APPLIED SCIENCES</option>    
+                           </select>
+                        </div>
+                        <div class="form-group"  ng-if="errorMessage">
+                            <div class="alert alert-danger">
+                              <strong>{{errorMessage}}</strong>
+                          </div>
+                           </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <img src="/images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                <!-- ng-if="signup_btn == true" -->
+                <button class="btn btn-primary btn-sm" ng-click="addCourse('<%= profileData._id%>')" ng-if="signup_btn==true"><span class="fa fa-check"></span> Add Course</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>   
+       <!-- end -->
+</div>

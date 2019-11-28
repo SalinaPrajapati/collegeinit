@@ -1,0 +1,89 @@
+<div class="top-colleges" ng-repeat="data in colleges">
+        <div class="col-md-12 header-slider-data" ng-if="data.collegesData.length != 0">
+                <div class=" header-left col-md-7">
+                        <p class="pag"> {{data.title}} </p>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-8">
+                        <!-- lists of filter -->
+                    </div>
+                    <div class="col-md-4 colleges-filter">
+                        <button class="btn btn-default"><span class="fa fa-sort-amount-desc"></span></button>
+                        <button class="btn btn-default"><span>total: {{data.collegesData.length}}</span></button>
+                    </div>
+                </div>
+            </div>
+            <!-- end -->
+           
+            <div class="col-md-12" style="padding: 0px;">
+                    <div id="{{data.id}}" class="carousel slide college-slide" data-ride="carousel" ng-if="data.collegesData[0]">
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner">
+                                <!-- carouesel 1st item -->
+                              <div class="item active">
+                                <div class="col-sm-4 col-lg-4 abroad"  ng-if="data.collegesData[0]">
+                                    <img src="./uploads/{{data.collegesData[0].background_image}}" alt="australia" class="aus">
+                                    <img src="./uploads/{{data.collegesData[0].logo}}" alt="flag" class="flag">
+                                    <h5 ng-if="data.collegesData[0].name.length < 27 ">{{data.collegesData[0].name.toUpperCase()}}</h5>
+                                    <h5 ng-if="data.collegesData[0].name.length > 27 ">{{data.collegesData[0].name.toUpperCase().substring(0, 26)}}...</h5>
+                                    <!-- <p>
+                                        Australia is the third most popular destination for International Students.
+                                        Apart from the fact that it is home to 8 of top 100 Universities in world,
+                                        5 of the top 30 cities in the world, 9th in terms of university ranking.
+                                    </p> -->
+                                    <a href="/{{data.collegesData[0].slug}}/profile={{data.collegesData[0]._id}}"><button class="btn btn-primary btn-sm">See More</button></a>
+                                </div>
+                                <div class="col-sm-4 col-lg-4 abroad"  ng-if="data.collegesData[1]">
+                                    <img src="./uploads/{{data.collegesData[1].background_image}}" alt="australia" class="aus">
+                                    <img src="./uploads/{{data.collegesData[1].logo}}" alt="flag" class="flag">
+                                    <h5 ng-if="data.collegesData[1].name.length < 27 ">{{data.collegesData[1].name.toUpperCase()}}</h5>
+                                    <h5 ng-if="data.collegesData[1].name.length > 27 ">{{data.collegesData[1].name.toUpperCase().substring(0, 26)}}...</h5>
+                                    <!-- <p>
+                                        Australia is the third most popular destination for International Students.
+                                        Apart from the fact that it is home to 8 of top 100 Universities in world,
+                                        5 of the top 30 cities in the world, 9th in terms of university ranking.
+                                    </p> -->
+                                    <a href="/{{data.collegesData[1].slug}}/profile={{data.collegesData[1]._id}}"><button class="btn btn-primary btn-sm">See More</button></a>
+                                </div>
+                                <div class="col-sm-4 col-lg-4 abroad"  ng-if="data.collegesData[2]">
+                                    <img src="./uploads/{{data.collegesData[2].background_image}}" alt="australia" class="aus">
+                                    <img src="./uploads/{{data.collegesData[2].logo}}" alt="flag" class="flag">
+                                    <h5 ng-if="data.collegesData[2].name.length < 27 ">{{data.collegesData[2].name.toUpperCase()}}</h5>
+                                    <h5 ng-if="data.collegesData[2].name.length > 27 ">{{data.collegesData[2].name.toUpperCase().substring(0, 26)}}...</h5>
+                                    <!-- <p>
+                                        Australia is the third most popular destination for International Students.
+                                        Apart from the fact that it is home to 8 of top 100 Universities in world,
+                                        5 of the top 30 cities in the world, 9th in terms of university ranking.
+                                    </p> -->
+                                    <a href="/{{data.collegesData[2].slug}}/profile={{data.collegesData[2]._id}}"><button class="btn btn-primary btn-sm">See More</button></a>
+                                </div>
+                              </div>
+                              <!-- end -->
+                              <!-- carousel 2nd item -->
+                              <div class="item">
+                                    <div class="col-sm-4 col-lg-4 abroad" ng-repeat="college in data.collegesData">
+                                        <img src="./uploads/{{college.background_image}}" alt="australia" class="aus">
+                                        <img src="./uploads/{{college.logo}}" alt="flag" class="flag">
+                                        <h5 ng-if="college.name.length < 27 ">{{college.name.toUpperCase()}}</h5>
+                                        <h5 ng-if="college.name.length > 27 ">{{college.name.toUpperCase().substring(0, 26)}}...</h5>
+                                        <!-- <p>
+                                            Australia is the third most popular destination for International Students.
+                                            Apart from the fact that it is home to 8 of top 100 Universities in world,
+                                            5 of the top 30 cities in the world, 9th in terms of university ranking.
+                                        </p> -->
+                                        <a href="/{{college.slug}}/profile={{college._id}}"><button class="btn btn-primary btn-sm">See More</button></a>
+                                    </div>
+                              </div>                    
+                            <!-- Left and right controls -->
+                            <a class="left carousel-control" href="#{{data.id}}" data-slide="prev">
+                              <span class="glyphicon glyphicon-chevron-left"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#{{data.id}}" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                            </div>
+                    </div>
+            </div>
+</div>

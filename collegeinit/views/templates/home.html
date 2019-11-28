@@ -1,0 +1,91 @@
+<div class="container-fluid home-container" ng-controller="homeController">
+    <div class="contain" style="  background: url('./images/back.jpg') no-repeat; height: 70vh;
+	background-size: cover; background-position: top;">
+        <p class="middle">{{slogan1}}</p>
+        <p class="middle" style="padding:0px;">{{slogan2}}</p>
+        <div class="search-bar col-md-6 col-md-offset-3">
+            <!-- <form method="GET"> -->
+                    <input ng-model="search" style="font-size: 17px;" type="text" placeholder="Search colleges and courses" class="form-control">
+            
+            <!-- <a href="/search?q={{search}}"> -->
+                <button ng-click="searchs()" class="btn btn-success fa fa-search"></button>
+            <!-- </a> -->
+            <!-- </form> -->
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 abc">
+        <div class="col-md-12 main-body">
+            <div class="col-md-3 body-left">
+                 <div class="col-md-12" style="padding-left: 30px;">
+                        <h5>Filter colleges By</h5>
+                        <p>Courses</p>
+                       <ul class="filter">
+                           <li> <input type="checkbox"> BBA</li>
+                           <li> <input type="checkbox"> BSW</li>
+                           <li> <input type="checkbox"> Hotel Management</li>
+                           <li> <input type="checkbox"> BE Civil</li>
+                           <li> <input type="checkbox"> Pharmacy</li>
+                           <li> <input type="checkbox"> BIT</li>
+                           <li> <input type="checkbox"> BCA</li>
+                       </ul>
+                       <p>Faculties</p>
+                       <ul class="filter">
+                           <li> <input type="checkbox"> Science And Tech.</li>
+                           <li> <input type="checkbox"> Management</li>
+                           <li> <input type="checkbox"> Science And Tech.</li>
+                           <li> <input type="checkbox"> Medical Science</li>
+                           <li> <input type="checkbox"> Science And Tech.</li>
+                           <li> <input type="checkbox"> Management</li>
+                       </ul>
+                       <p>Affilation</p>
+                       <ul class="filter">
+                           <li> <input type="checkbox"> Purbanchal University</li>
+                           <li> <input type="checkbox"> Kathmandu University</li>
+                           <li> <input type="checkbox"> Pokhara University</li>
+                           <li> <input type="checkbox"> Tribhuvan University</li>
+                           <li> <input type="checkbox"> HSEB</li>
+                           <li> <input type="checkbox"> CTEVT</li>
+                       </ul>
+                 </div>
+                <div class="col-md-12 side-scholarship">
+                    <div class="ads-admission">
+                        <h6>Apply Scholarships</h6>
+                        <img src="./images/colz1.png" alt="">
+                        <img src="./images/ku.png" alt="" style="margin-top: 10px;">
+                        <p>Lorem, ipsum dolor sit amet consectetur adipisicin
+                            s facere adipisci. Laborum, dolor provident.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 body-right">
+                <!-- title of slider -->
+                <!-- colleges top, expensive -->
+                <div ng-if="searchUi == false">
+                   <% include dataSlider.html%>
+                </div>
+                <div ng-if="searchUi == true">
+                     <% include search.html%>
+                </div>
+                <!-- end -->
+               <!-- new admission -->
+                  <% include admission.html%>
+                  <% include admission.html%>
+               <!-- end -->
+            </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<script>
+   $(window).scroll(function(e){ 
+  var $el = $('.ads-admission'); 
+  var isPositionFixed = ($el.css('position') == 'fixed');
+  if ($(this).scrollTop() > 1025 && !isPositionFixed){ 
+    $('.ads-admission').css({'position': 'fixed', 'top': '7%','border-right': '4px solid #dcdcdc'}); 
+  }
+  if ($(this).scrollTop() < 1025 && isPositionFixed)
+  {
+	$('.ads-admission').css({'position': 'static', 'border-right': 'none'});
+  } 
+});
+</script>

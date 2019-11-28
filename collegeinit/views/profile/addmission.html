@@ -1,0 +1,216 @@
+<div ng-controller="profileController" ng-init="loadAdmissionInfo('<%= profileData._id%>')">
+    <style>
+        #admission-menu{
+            color: #3c55b9;
+        }
+    </style>
+     <!-- admission details and all applications -->
+     <div class="col-md-12 content-header" ng-init="loadAdmission('<%= profileData._id%>')">
+        <div class="content-header-left col-md-11">
+            <h2> All Announced Admission and Applications</h2>
+        </div>
+        <div class="content-header-right col-md-1">
+            <%if(loginStatus==true){%>
+                <% if(userData._id == profileData._id){%>
+              <button class="btn btn-default fa fa-pencil-square" style="float: right;" data-toggle="modal" data-target="#addAdmission"> Announce New Addmission</button>
+            <%}}%>
+        </div>
+    </div>
+    <div class="col-md-12 content-body" style="border-bottom:1px solid #cccccc;">
+                <div class="col-md-12 all-admissions" ng-repeat="dat in admission">
+                    <h2>{{dat.admission_name}} <span class="fa fa-clock-o"> Close at: {{dat.close_date | date}}</span></h2>
+                    <p class="fa fa-calendar"> From: <span>{{dat.open_date | date}}</span></p>
+                     <div class="col-md-12 applicants">
+                         <h3>Appicants Lists</h3>
+                         <div class="male-female-indicatior col-md-4">
+                             <div class="col-md-6 male-indication">
+                                <img src="/images/male.png" alt="">
+                                <label for="">20</label>
+                             </div>
+                             <div class="col-md-6 male-indication">
+                                <img src="/images/female.png" alt="">
+                                <label for="">2</label>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-md-12 applied-admission">
+                         <div class="applicant-items col-md-3" data-toggle="modal" data-target="#appDetails">
+                             <img src="/images/male.png" alt="" width="20%;">
+                             <span for="">Kamal Bdr Shahi</span>
+                         </div>
+                         <div class="applicant-items col-md-3" data-toggle="modal" data-target="#appDetails">
+                            <img src="/images/male.png" alt="" width="20%;">
+                            <span for="">Kamal Bdr Shahi</span>
+                        </div>
+                        <div class="applicant-items col-md-3" data-toggle="modal" data-target="#appDetails">
+                                <img src="/images/male.png" alt="" width="20%;">
+                                <span for="">Kamal Bdr Shahi</span>
+                            </div>
+                            <div class="applicant-items col-md-3" data-toggle="modal" data-target="#appDetails">
+                               <img src="/images/male.png" alt="" width="20%;">
+                               <span for="">Kamal Bdr Shahi</span>
+                           </div>
+                           <div class="applicant-items col-md-3" data-toggle="modal" data-target="#appDetails">
+                                <img src="/images/male.png" alt="" width="20%;">
+                                <span for="">Kamal Bdr Shahi</span>
+                            </div>
+                            <div class="applicant-items col-md-3" data-toggle="modal" data-target="#appDetails">
+                               <img src="/images/male.png" alt="" width="20%;">
+                               <span for="">Kamal Bdr Shahi</span>
+                           </div>      
+                     </div>
+                </div>
+    </div>
+     <!-- end -->
+     <div class="col-md-12 content-header">
+        <div class="content-header-left col-md-11">
+            <h2>Admission Information</h2>
+        </div>
+        <div class="content-header-right col-md-1">
+           <%if(loginStatus==true){%>
+               <% if(userData._id == profileData._id){%>
+             <button class="btn btn-default fa fa-pencil-square" style="float: right;" data-toggle="modal" data-target="#editInfo"> Update Admission Info</button>
+             <%}}%>    
+        </div>
+    </div>
+    <div class="col-md-12 content-body">
+           <div ng-bind-html="admission_info.admissionBody"></div>
+    </div>
+    
+    <!-- update info -->
+    <div id="editInfo" class="modal fade adminProfileInfo" role="dialog" style="display: none;">
+        <div class="modal-dialog" style="min-width: 80%;">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">×</button>
+              <h4 class="modal-title">Update Admission Information</h4>
+            </div>
+            <div class="col-md-12 col-lg-12 modal-body add-profile-info">
+                    <div class="col-md-12 images-pick">
+                        <label for="">Write all information in text editor</label>
+                        <input ck-editor type="text" ng-model="admissionInfo.admissionBody">
+                    </div>
+                    <div class="col-md-12 images-pick" ng-if="errorMessage">
+                        <div class="alert alert-danger">
+                            <strong>{{errorMessage}}</strong>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <img src="/images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                <!-- ng-if="signup_btn == true" -->
+                <button class="btn btn-primary btn-sm" ng-click="updateAdmissionInfo('<%= profileData._id%>')" ng-if="signup_btn==true"><span class="fa fa-check"></span> Update Info</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>   
+       <!-- end -->
+    
+       <!-- admission adding -->
+       <div id="addAdmission" class="modal fade adminProfileInfo" role="dialog" style="display: none;">
+            <div class="modal-dialog" style="max-width: 27%;">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h4 class="modal-title">Announce new admission</h4>
+                </div>
+                <div class="col-md-12 col-lg-12 modal-body add-profile-info">
+                    <div class="form-group">
+                            <label for="">Title of admission</label>
+                            <input type="text" class="form-control" ng-model="admission_data.admission_name">
+                    </div>
+                    <div class="form-group">
+                            <label for="">From Date</label>
+                            <input type="date" ng-model="admission_data.open_date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                            <label for="">To Date</label>
+                            <input type="date" ng-model="admission_data.close_date" class="form-control">
+                    </div>
+                    <div class="form-group"ng-if="errorMessage">
+                            <div class="alert alert-danger">
+                                <strong>{{errorMessage}}</strong>
+                            </div>
+                     </div>
+                </div>
+                <div class="modal-footer">
+                    <img src="/images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                    <!-- ng-if="signup_btn == true" -->
+                    <button class="btn btn-primary btn-sm" ng-if="signup_btn==true" ng-click="addAdmission('<%= profileData._id%>')"><span class="fa fa-check"></span> Announce Admission</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+          
+            </div>
+        </div>
+       <!-- end -->
+    
+    
+        <!-- applicants details -->
+        <div id="appDetails" class="modal fade adminProfileInfo" role="dialog" style="display: none;">
+                <div class="modal-dialog" style="min-width: 90%;">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">×</button>
+                      <h4 class="modal-title">Details of kamal bdr shahi</h4>
+                    </div>
+                    <div class="col-md-12 col-lg-12 modal-body add-profile-info">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-sm-12"><h1>Admission Form</h1>
+                                    </div>
+                                </div><hr class="mt-0">
+                                <div class="row"><div class="col-sm-12">
+                                    <div class="detail-view"><div class="row">
+                                        <div class="col-sm-12 col-md-12"><form>
+                                            <div class="form-group">
+                                                <label for="name">Full Name*</label>
+                                                <input type="text" class="form-control" id="name" placeholder="Full Name" name="name" required="">
+                                            </div>
+                                            <div class="form-row row"><div class="form-group col-md-6">
+                                                <label for="email">Email*</label>
+                                                <input type="email" class="form-control" id="email" placeholder="Email" name="email" required="">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="phone">Contact Number*</label>
+                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Mobile Number" required="">
+                                            </div>
+                                        </div><div class="form-group">
+                                            <label for="college">Note/Queries (<span class="font-italic">optional </span>)</label>
+                                            <textarea rows="3" class="form-control" id="notes"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sel1">Select Course:</label>
+                                            <select class="form-control" id="sel1" required="">
+                                                <option value="">-------</option>
+                                                <option value="572">MA in Rural Development</option>
+                                                <option value="447">Master of Business Studies (MBS)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="college" disabled="">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <img src="./images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                        <!-- ng-if="signup_btn == true" -->
+                        <button class="btn btn-primary btn-sm" ><span class="fa fa-check"></span> Announce Admission</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+              
+                </div>
+            </div>
+           <!-- end -->
+</div>

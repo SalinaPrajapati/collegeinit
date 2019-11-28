@@ -1,0 +1,88 @@
+<link rel="stylesheet" type="text/css" href="/css/blog.css">
+<div class="container-fluid blog-container" ng-controller="blogController" ng-init="loadBlog()">
+    <div class="header-of-blog col-md-12">
+        <div class="contain" style="background-image:url('./images/back.jpg'); height: 60vh;
+           background-size: cover; background-position: center;">
+            <p class="middle">Write your own blog, share your knowledge,</p>
+            <p class="middle" style="padding:0px;">In any topic you can write</p>
+            <div class="search-bar col-md-6 col-md-offset-3">
+                <input type="text" placeholder="search by title" class="form-control">
+                <button class="btn btn-success fa fa-search"></button>
+            </div>
+            <% if(userLoginStatus == true){%>
+            <p ng-if="write_btn == true" style="width:100%;
+            text-align: center;
+            margin-top: 77px;"><button class="btn btn-primary new-blog-btn" ng-click="writeBlog()"> <span class="fa fa-pencil"></span> Write New Blog</button></p>
+          <%}%>    
+    </div>
+    </div>
+    <div class="col-md-10 col-md-offset-1 blog-body">
+        <!-- <div class="col-md-12 blog-wrapper"> -->
+            <!-- <div class="inner-wrapper col-md-12"> -->
+                <div class="col-md-9 blog-left">
+                <% if(userLoginStatus == true){%>
+                        <div class="create-new-blog-form col-md-12" ng-if="blog_editor == true">
+                             <div class="col-md-12" style="padding: 0px 8px;">
+                                    <div class="col-md-12 comment-form">
+                                            <h4>Write a blog <span class="fa fa-times" ng-click="cancelBlog_wr()" style="float:right;"></span></h4>
+                                            <div class="col-md-12"  ng-controller="blogController">
+                                                    <div class="col-md-6">
+                                                         <input type="text" class="form-control" ng-model="blog.blog_title" placeholder="Title of blog..">
+                                                       </div>
+                                                       <div class="col-md-6">
+                                                            <input type="file" class="form-control" id="blogImage">
+                                                       </div> 
+                                                       <div class="col-md-6"> <br>
+                                                        <label for="">Select Category</label>
+                                                        <select id="" ng-model="blog.blog_category" name="category" class="form-control">
+                                                            <option ng-repeat="dat in navElements" value="{{dat.name}}">{{dat.name}}</option>
+                                                        </select>
+                                                        </div>
+                                                    <div class="col-md-12">
+                                                         <br> 
+                                                           <input type="text" ck-editor ng-model="blog.blog_body"><br>
+                                                           <div class="alert alert-danger" ng-if="errorMessage">
+                                                               <strong>{{errorMessage}}</strong>
+                                                           </div>
+                                                           <div class="alert alert-success" ng-if="successMessage">
+                                                                <strong>{{successMessage}}</strong>
+                                                            </div>
+                                                         <img src="/images/loading.gif" ng-if="loading==true" width="38px" alt="">
+                                                         <button class="btn btn-primary btn-sm" ng-if="signup_btn==true" ng-click="postBlog('<%= userData._id%>')">POST</button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                             </div>   
+                        </div> 
+                    <%}%>
+                    <h3>Recent blogs</h3>
+                    <div ng-if="blogDatas.length>0" ng-repeat="data in blogDatas | orderBy: '-created'">
+                            <a  href="/{{data.slug}}/blog={{data._id}}">
+                                    <div class="col-sm-6 col-lg-6 abroad">
+                                        <img src="./uploads/{{data.image}}" alt="{{data.blog_title}}" class="aus">
+                                        <h5>{{data.blog_title}}</h5>
+                                        <p ng-bind-html="data.blog_body.substring(0, 150)">
+                                             
+                                        </p>
+                                         <div class="col-md-12 blog-buttons">
+                                             <span class="fa fa-eye"> <span>{{data.views}}</span></span>
+                                             <span class="fa fa-comment"> <span>{{data.commentCount}}</span></span>
+                                             <span class="fa fa-user"> <span>{{data.author_name}}</span></span>
+                                         </div>
+                                    </div>
+                                </a>
+                    </div>
+                    <p style="text-align: center;" ng-if="blogData.length == 0"><a href="">No blogs has been posted yet. Please post blogs and share knowledge.</a></p>
+                </div>
+                <div class="col-md-3 blog-right">
+                    <div class="col-md-12 blog-right-inner">
+                        <img src="./images/back.png" width="100%" alt="">
+                        <img src="./images/pu.png" width="100%" alt="">
+                        <img src="./images/pu.png" width="100%" alt="">
+                        <img src="./images/back.png" width="100%" alt="">
+                    </div>
+                </div>
+            <!-- </div> -->
+        <!-- </div> -->
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html ng-app="collegeinit">
+
+<head>
+    <title> CI-<%= pTitle%>-Search and find best colleges</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- end -->
+<!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!-- angular library -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.8/angular-sanitize.min.js"></script>
+<!-- mapbox -->
+<script src='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+<!-- end -->
+<script src="//cdn.ckeditor.com/4.11.1/full/ckeditor.js"></script>
+<script src="/js/controller.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body ng-cloak>
+    <div class="header">
+        <nav class="navbar">
+            <div class="container-fluid" style="padding: 0px 85px;">
+                <div class="navbar-header brand-name" style="margin-left: 51px;">
+                    <a class="navbar-brand hell" href="/home"><span>CI</span> College.Init </a>
+                </div>
+                <ul class="nav navbar-nav heel">
+                    <li class="active"><a href="/home" id="home-pg">Home</a></li>
+                    <li><a href="/colleges" id="college-pg">Colleges</a></li>
+                    <li><a href="/blogs" id="blog-pg">Blog</a></li>
+                    <li><a href="/notes" id="notes-pg">Notes</a></li>
+                    <li><a href="#" id="major-pg">Review</a></li>
+                    <li><a href="#" id="aboutus-pg">About us</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right bin">
+                    <% if(loginStatus == true || userLoginStatus == true){%>
+                        <!-- notif -->
+                        <div class="dropdown notification">
+                               <span class="fa fa-bell bell-notif" type="button" data-toggle="dropdown"></span>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#">notif</a></li>
+                                  <li><a href="#">Notif</a></li>
+                                  <p><%= userData.name%></p>
+                                  <p><%= userData.username%></p>
+                                  <p><%= userData.email%></p>
+                                  <p><%= userData.contact%></p>
+                                </ul>
+                        </div>
+                        <!-- end -->
+                        <!-- profile -->
+                        <div class="dropdown user-logged-in">
+                                <div class="user-icon" type="button" data-toggle="dropdown">
+                                    <img src="/images/user.png" alt="">
+                                    <span class="fa fa-caret-down"></span>
+                                </div>
+                                <ul class="dropdown-menu" style="margin-top: 10px;">
+                                    <li>
+                                        <%if(loginStatus==true){%>
+                                        <a href="/<%= userData.slug%>/profile=<%= userData._id%>">My Profile</a>
+                                        <%}else{%>
+                                         <a href="/<%= userData.slug%>/myprofile=<%= userData._id%>">My Profile</a>
+                                        <%}%>
+                                    </li>
+                                    <li><a href="/logout/logout/logout">Logout</a></li>
+                                </ul>
+                        </div>
+                        <!-- end -->
+                    <%}else{%>
+                        <a href="/signup">
+                            <button class="btn btn-warning navbar-btn glyphicon glyphicon-user but sign" style=" margin-right: 32px;"><b class="sign">Signup</b></button>
+                        </a>
+                        <a href="/login">
+                            <button class="btn btn-primary navbar-btn glyphicon glyphicon-log-in but log"><b class="log"> Login</b></button>
+                        </a>
+                    <%}%>
+
+            </div>
+        </nav>
+    </div>
+  

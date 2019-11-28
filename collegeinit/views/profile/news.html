@@ -1,0 +1,68 @@
+<style>
+        #news-menu{
+            color: #0530d4;
+        }
+    </style>
+    <div class="col-md-12 content-header">
+    <div class="content-header-left col-md-11">
+        <h2>Write News and Notices</h2>
+    </div>
+    <div class="content-header-right col-md-1">
+            <%if(loginStatus==true){%>
+                <% if(userData._id == profileData._id){%>
+                 <button class="btn btn-default fa fa-pencil-square" style="float: right;" data-toggle="modal" data-target="#addNotice"> Write Notice</button>
+            <%}%>
+            <%}%>
+    </div>
+    </div>
+    <div class="col-md-12 content-body">
+       <div class="col-md-12 notice-publish" ng-repeat="dat in college_notice | orderBy: '-created'">
+           <h3>
+               <a href="">College Post: </a>{{dat.noticeTitle}} 
+               <%if(loginStatus==true){%>
+                <% if(userData._id == profileData._id){%>
+                    <span class="dropdown">
+                        <span  class="fa fa-ellipsis-v dropdown-toggle" type="button" data-toggle="dropdown"></span>
+                        <ul class="dropdown-menu">
+                            <li><a style="background: none; color: gray;" href="#" data-toggle="modal" data-target="#deleteNotice" class="fa fa-trash" ng-click="deleteNotice(dat._id, '<%= profileData._id%>')"> Delete</a></li>
+                        </ul>
+                    </span>
+                <%}%>
+                <%}%>
+               
+                <span class="fa fa-clock-o"> {{dat.created | date}}</span>
+            </h3>
+           <div class="notice-body">
+               <div ng-bind-html="dat.noticeBody"></div>
+           </div>
+       </div>  
+    </div>   
+       <!-- end -->
+
+     
+
+       <!-- sure want to delete notice modal -->
+       <div id="deleteNotice" class="modal fade adminProfileInfo" role="dialog" style="display: none;">
+            <div class="modal-dialog" style="max-width: 30%;">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h4 class="modal-title">Are you sure want to delete?</h4>
+                </div>
+                <div class="modal-body" ng-if="errorMessage">
+                    <div class="alert alert-danger">
+                        <strong>{{errorMessage}}</strong>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <img src="./images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                    <!-- ng-if="signup_btn == true" -->
+                    <button class="btn btn-danger btn-sm" ng-if="signup_btn==true" ng-click="sure()" ><span class="fa fa-check"></span> Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+              </div>
+          
+            </div>
+        </div>
+       <!-- end -->

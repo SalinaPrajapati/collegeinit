@@ -1,0 +1,53 @@
+<form ng-controller="loginController">
+    <div class="container-fluid bg">
+        <div class="row"> <br><br><br>
+            <div class="col-md-4 col-md-offset-4 whole">
+                <ul class="nav nav-pills login-nav-bar">
+                    <li class="active"><a data-toggle="pill" href="#userLogin"> User Login</a></li>
+                    <li><a data-toggle="pill" href="#collegeLogin">College Login</a></li>
+                </ul>
+                <!-- tabs of user nad college login ui -->
+                <div class="tab-content">
+                  <form class="form-container">
+                   <div id="userLogin" class="tab-pane fade in active">
+                        <div class="form-group">
+                                <h1 class="header-title">USER LOGIN</h1> <br>
+                                <input type="text" class="form-control" id="name" placeholder="Username" name="text" ng-model="user.username">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="pwd" placeholder="Password" name="pwd" ng-model="user.password">
+                            </div>
+                            <div class="checkbox">
+                                <!-- <label><input type="checkbox" name="remember"> Remember me</label> -->
+                                <a href="/signup">don't have account?</a>
+                            </div>
+                            <img src="./images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                            <button type="button" class="btn btn-success btn-block" ng-if="signup_btn == true" ng-click="logIn('user')">Login</button> 
+                   </div> 
+                   <div  id="collegeLogin" class="tab-pane fade">
+                        <div class="form-group">
+                                <h1 class="header-title">COLLEGE LOGIN</h1> <br>
+                                <input type="text" class="form-control" id="name" placeholder="Username" name="text" ng-model="user.username">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="pwd" placeholder="Password" name="pwd" ng-model="user.password">
+                            </div>
+                            <div class="checkbox">
+                                <!-- <label><input type="checkbox" name="remember"> Remember me</label> -->
+                                <a href="/signup">don't have account?</a>
+                        </div>
+                        <img src="./images/loading.gif" alt="" class="loading-gif" ng-if="loading == true">
+                        <button type="button" class="btn btn-success btn-block" ng-if="signup_btn == true" ng-click="logIn('college')">Login</button> 
+                   </div>  
+                  </form>
+                </div>
+<!-- end of forms -->
+            </div>
+        </div>
+        <div class="col-md-4 col-md-offset-4" style="margin-top: 40px; padding: 0px;">
+            <div class="alert {{messageClass}}" style="margin-top: 9px;" ng-if="message">
+                <strong>{{message}}</strong>
+            </div>
+        </div>
+    </div>
+</form>
